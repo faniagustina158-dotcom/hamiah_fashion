@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hamiah</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- My Style -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Alpine.js -->
+    <script src="src/app.js" async></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <script
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="Mid-client-rM78RofFV2p3O4L_"
+    ></script>
+  </head>
+  <body>
+    <!-- Navbar start -->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">Hamiah<span>Fashion</span>.</a>
+
+      <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Katalog</a>
+        <a href="#products">Produk</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="search-button"><i data-feather="search"></i></a>
+        <a href="#" id="shopping-cart-button">
+          <i data-feather="shopping-cart"></i>
+          <span
+            class="quantity-badge"
+            x-show="$store.cart.quantity"
+            x-text="$store.cart.quantity"
+          ></span>
+        </a>
+        <a href="#" id="hamburger-menu">
+          <i data-feather="menu"></i>
+        </a>
+      </div>
+
+      <!-- Search Form start -->
+      <div class="search-form">
+        <input type="search" id="search-box" placeholder="search here..." />
+        <label for="search-box"><i data-feather="search"></i></label>
+      </div>
+      <!-- Search Form end -->
+
+      <!-- Shopping Cart start -->
+      <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-key="index">
+          <div class="cart-item">
+            <img :src="`img/products/${item.img}`" :alt="item.name" />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span> &times;
+                <button id="remove" @click="$store.cart.remove(item.id)">
+                  &minus;
+                </button>
+                <span x-text="item.quantity"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button>
+                &equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length">Cart is empty</h4>
+        <h4 x-show="$store.cart.items.length">
+          Total <span x-text="rupiah($store.cart.total)"></span>
+        </h4>
+        <div class="form-container">
+          <form action="" id="checkoutForm" x-show="$store.cart.items.length">
+            <input
+              type="hidden"
+              name="items"
+              x-model="JSON.stringify($store.cart.items)"
+            />
+            <input
+              type="hidden"
+              name="total"
+              x-model="JSON.stringify($store.cart.total)"
+            />
+
+            <h5>Customer Detail</h5>
+
+            <label for="name">
+              <span>name</span>
+              <input type="text" id="name" name="name" />
+            </label>
+            <label for="email">
+              <span>email</span>
+              <input type="text" id="email" name="email" />
+            </label>
+            <label for="phone">
+              <span>phone</span>
+              <input type="number" id="phone" name="phone" autocomplete="off" />
+            </label>
+            <button
+              class="checkout-button disabled"
+              type="submit"
+              id="checkout-button"
+              value="checkout"
+            >
+              checkout
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Shopping Cart end -->
+    </nav>
+    <!-- Navbar end -->
+
+    <!-- Hero Section start -->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Grow Faith With <span>Hamiah</span></h1>
+        <p>
+          Kami hadir untuk menemani perjalananmu dengan hijab yang nyaman,
+          sederhana, dan penuh makna.
+        </p>
+      </main>
+    </section>
+    <!-- Hero Section end -->
+
+    <!-- About Section start -->
+    <section id="about" class="about">
+      <h2><span>Tentang</span> Kami</h2>
+
+      <div class="row">
+        <div class="about-img">
+          <img src="img/img8.jpeg" alt="Tentang Kami" />
+        </div>
+        <div class="content">
+          <h3>Kenapa memilih hijab kami?</h3>
+          <p>
+            Kami mengajakmu untuk bertumbuh bersama, hijab memperindah diri dari
+            luar sekaligus memperkuat iman dari dalam. Hamiah dirancang untuk
+            menghadirkan kenyamanan sekaligus keanggunan dalam setiap pemakaian.
+            Menggunakan bahan pilihan yang lembut, ringan, dan mudah dibentuk,
+            hijab Hamiah cocok digunakan untuk aktivitas sehari-hari maupun
+            momen istimewa. Dengan pilihan warna-warna estetik dan desain yang
+            sederhana namun berkelas, produk unggulan Hamiah menjadi pilihan
+            tepat bagi perempuan yang ingin tampil anggun tanpa meninggalkan
+            nilai kesopanan.
+          </p>
+          <p>
+            Bersama kami, mari mulai perjalanan berhijab dengan penuh niat baik.
+            Tumbuh dalam kesederhanaan, anggun dalam ketaatan, dan kuat dalam
+            keyakinan. Hijab bukan batasan, melainkan kehormatan yang membawa
+            ketenangan dan keberkahan.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- About Section end -->
+
+    <!-- Menu Section start -->
+    <section id="menu" class="menu">
+      <h2><span>Kata</span>log</h2>
+      <p>
+        Hamiah hadir sebagai brand hijab yang menemani setiap langkah perempuan
+        dalam perjalanan berhijab. Dengan desain sederhana, warna-warna lembut,
+        dan bahan yang nyaman digunakan sehari-hari, Hamiah ingin menjadi
+        sahabat setia yang mendukung penampilan anggun tanpa meninggalkan nilai
+        kesopanan dan makna ketaatan.
+      </p>
+
+      <div class="row">
+        <div class="menu-card">
+          <img
+            src="img/img10.jpeg"
+            width="200"
+            ,
+            height="200"
+            alt="Scarf Polycatton Premium"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-img">-Scarf Polycatton Premium-</h3>
+          <p class="menu-card-price">IDR 30K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/img11.jpeg"
+            width="200"
+            ,
+            height="200"
+            alt="Scarf Polycatton Premium"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-img">-Pashmina Kaos-</h3>
+          <p class="menu-card-price">IDR 45K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/img12.jpeg"
+            width="200"
+            ,
+            height="200"
+            alt="Scarf Polycatton Premium"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-img">-Malay Scarf-</h3>
+          <p class="menu-card-price">IDR 40K</p>
+        </div>
+
+        <div class="menu-card">
+          <img
+            src="img/img13.jpeg"
+            width="200"
+            ,
+            height="200"
+            alt="Scarf Polycatton Premium"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-img">-Paris Jadul-</h3>
+          <p class="menu-card-price">IDR 28K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/img12.jpeg"
+            width="200"
+            ,
+            height="200"
+            alt="Scarf Polycatton Premium"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-img">-Basic Scarf-</h3>
+          <p class="menu-card-price">IDR 28K</p>
+        </div>
+      </div>
+    </section>
+    <!-- Menu Section end -->
+
+    <!-- Products Section start -->
+    <section class="products" id="products" x-data="products">
+      <h2>Produk <span>Unggulan</span> Kami</h2>
+
+      <div class="row">
+        <template x-for="(item, index) in items" x-key="index">
+          <div class="product-card">
+            <div class="product-icons">
+              <a href="#" @click.prevent="$store.cart.add(item)">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#shopping-cart" />
+                </svg>
+              </a>
+              <a href="#" class="item-detail-button">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#eye" />
+                </svg>
+              </a>
+            </div>
+            <div class="product-image">
+              <img
+                :src="`img/products/${item.img}`"
+                :alt="`Product ${item.name}`"
+              />
+            </div>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-stars">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+              </div>
+              <div class="product-price">
+                <span> <span x-text="rupiah(item.price)"></span></span>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+    <!-- Products Section end -->
+
+    <!-- Contact Section start -->
+    <section id="contact" class="contact">
+      <h2><span>Kontak</span> Kami</h2>
+      <p>
+        Untuk informasi lebih lanjut mengenai produk, pemesanan, maupun kerja
+        sama, silakan hubungi kami melalui kontak yang tersedia. Tim Hamiah siap
+        membantu dengan pelayanan yang ramah dan responsif. Kunjungi alamat kami
+        sesuai informasi di bawah ini atau hubungi kami melalui media komunikasi
+        resmi untuk pengalaman berbelanja yang nyaman dan terpercaya.
+      </p>
+
+      <div class="row">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2038.3986038967496!2d106.76454983916193!3d-6.5596525228882125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c48f24660385%3A0xfeec0202f153663f!2sJl.%20Fajar%20Baru%20No.22%2C%20RT.07%2FRW.01%2C%20Semplak%2C%20Kec.%20Bogor%20Bar.%2C%20Kota%20Bogor%2C%20Jawa%20Barat%2016114!5e0!3m2!1sid!2sid!4v1768353988997!5m2!1sid!2sid"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="map"
+        ></iframe>
+
+        <form action="">
+          <div class="input-group">
+            <i data-feather="user"></i>
+            <input type="text" placeholder="nama" />
+          </div>
+          <div class="input-group">
+            <i data-feather="mail"></i>
+            <input type="text" placeholder="email" />
+          </div>
+          <div class="input-group">
+            <i data-feather="phone"></i>
+            <input type="text" placeholder="no hp" />
+          </div>
+          <button type="submit" class="btn">kirim pesan</button>
+        </form>
+      </div>
+    </section>
+    <!-- Contact Section end -->
+
+    <!-- Modal Box Item Detail start -->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/product/img2.jpeg" alt="Product 1" />
+          <div class="product-content">
+            <h3>Product 1</h3>
+            <p>...</p>
+            <div class="product-price">IDR 28K <span>IDR 45K</span></div>
+            <a href="#">
+              <i data-feather="shopping-cart"></i>
+              <span>add to cart</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Box Item Detail end -->
+
+    <!-- Feather Icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- My Javascript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
